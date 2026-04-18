@@ -134,7 +134,6 @@
     <strong>Thương hiệu Laptop</strong>
     <a href="Dell.html">Dell Inspiron/Vostro</a>
     <a href="MSi.html">MSI Gaming</a>
-    <a href="#">Apple MacBook</a>
   </div>
 </div>
 
@@ -187,6 +186,77 @@
   </div>
 </footer>
 
+<!-- Modal Đăng Ký -->
+<div class="modal fade" id="registerModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 15px;">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title fw-bold">📝 Đăng Ký Tài Khoản</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="registerForm">
+          <div class="mb-3">
+            <label for="regUsername" class="form-label">Tên đăng nhập</label>
+            <input type="text" class="form-control" id="regUsername" placeholder="Nhập tên đăng nhập" required>
+            <small class="text-muted">Tối thiểu 3 ký tự, chỉ chứa chữ, số và _</small>
+          </div>
+          <div class="mb-3">
+            <label for="regEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="regEmail" placeholder="Nhập email" required>
+          </div>
+          <div class="mb-3">
+            <label for="regPassword" class="form-label">Mật khẩu</label>
+            <input type="password" class="form-control" id="regPassword" placeholder="Nhập mật khẩu" required>
+            <small class="text-muted">Tối thiểu 6 ký tự</small>
+          </div>
+          <div class="mb-3">
+            <label for="regConfirmPassword" class="form-label">Xác nhận mật khẩu</label>
+            <input type="password" class="form-control" id="regConfirmPassword" placeholder="Xác nhận mật khẩu" required>
+          </div>
+          <div id="registerError" class="alert alert-danger d-none"></div>
+          <button type="submit" class="btn btn-success w-100 fw-bold">Đăng Ký</button>
+        </form>
+        <hr>
+        <p class="text-center text-muted">Đã có tài khoản? 
+          <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#loginModal" class="text-primary fw-bold">Đăng nhập tại đây</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Đăng Nhập -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius: 15px;">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold">🔐 Đăng Nhập</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="loginForm">
+          <div class="mb-3">
+            <label for="loginUsername" class="form-label">Tên đăng nhập</label>
+            <input type="text" class="form-control" id="loginUsername" placeholder="Nhập tên đăng nhập" required>
+          </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">Mật khẩu</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Nhập mật khẩu" required>
+          </div>
+          <div id="loginError" class="alert alert-danger d-none"></div>
+          <button type="submit" class="btn btn-primary w-100 fw-bold">Đăng Nhập</button>
+        </form>
+        <hr>
+        <p class="text-center text-muted">Chưa có tài khoản? 
+          <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal" class="text-success fw-bold">Đăng ký ngay</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Liên Hệ -->
 <div class="modal fade" id="contactModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content" style="border-radius: 15px; background: #7adfa8;">
@@ -205,6 +275,127 @@
 <script>
   let currentUser = localStorage.getItem("currentUser") || null;
   let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  // Validation functions
+  function validateUsername(username) {
+    const regex = /^[a-zA-Z0-9_]{3,}$/;
+    return regex.test(username);
+  }
+
+  function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+
+  function validatePassword(password) {
+    return password.length >= 6;
+  }
+
+  // Đăng ký
+  document.getElementById("registerForm")?.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const errorDiv = document.getElementById("registerError");
+    
+    const username = document.getElementById("regUsername").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const password = document.getElementById("regPassword").value;
+    const confirmPassword = document.getElementById("regConfirmPassword").value;
+
+    // Xóa thông báo lỗi cũ
+    errorDiv.classList.add("d-none");
+    errorDiv.innerHTML = "";
+
+    // Validation
+    if (!validateUsername(username)) {
+      errorDiv.innerHTML = "⚠️ Tên đăng nhập phải có ít nhất 3 ký tự, chỉ chứa chữ, số và dấu gạch dưới";
+      errorDiv.classList.remove("d-none");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      errorDiv.innerHTML = "⚠️ Email không hợp lệ";
+      errorDiv.classList.remove("d-none");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      errorDiv.innerHTML = "⚠️ Mật khẩu phải có ít nhất 6 ký tự";
+      errorDiv.classList.remove("d-none");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      errorDiv.innerHTML = "⚠️ Mật khẩu xác nhận không khớp";
+      errorDiv.classList.remove("d-none");
+      return;
+    }
+
+    // Kiểm tra tên đăng nhập đã tồn tại
+    if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+      errorDiv.innerHTML = "⚠️ Tên đăng nhập đã tồn tại";
+      errorDiv.classList.remove("d-none");
+      return;
+    }
+
+    // Kiểm tra email đã tồn tại
+    if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+      errorDiv.innerHTML = "⚠️ Email đã được đăng kí";
+      errorDiv.classList.remove("d-none");
+      return;
+    }
+
+    // Đăng ký thành công
+    users.push({
+      username: username,
+      email: email,
+      password: password, // ⚠️ Trong thực tế, nên mã hóa mật khẩu
+      createdAt: new Date().toISOString()
+    });
+
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("✅ Đăng ký thành công! Vui lòng đăng nhập.");
+    
+    // Đóng modal và reset form
+    bootstrap.Modal.getInstance(document.getElementById("registerModal")).hide();
+    document.getElementById("registerForm").reset();
+  });
+
+  // Đăng nhập
+  document.getElementById("loginForm")?.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const errorDiv = document.getElementById("loginError");
+    
+    const username = document.getElementById("loginUsername").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    errorDiv.classList.add("d-none");
+    errorDiv.innerHTML = "";
+
+    // Tìm user
+    const user = users.find(u => u.username.toLowerCase() === username.toLowerCase());
+    
+    if (!user) {
+      errorDiv.innerHTML = "⚠️ Tên đăng nhập không tồn tại";
+      errorDiv.classList.remove("d-none");
+      return;
+    }
+
+    if (user.password !== password) {
+      errorDiv.innerHTML = "⚠️ Mật khẩu không chính xác";
+      errorDiv.classList.remove("d-none");
+      return;
+    }
+
+    // Đăng nhập thành công
+    currentUser = username;
+    localStorage.setItem("currentUser", username);
+    alert("✅ Đăng nhập thành công!");
+    
+    // Đóng modal, reset form, update navbar
+    bootstrap.Modal.getInstance(document.getElementById("loginModal")).hide();
+    document.getElementById("loginForm").reset();
+    updateNavbar();
+  });
 
   function updateNavbar() {
     const area = document.getElementById("userArea");
@@ -231,8 +422,11 @@
   }
 
   function logout() {
-    localStorage.removeItem("currentUser");
-    location.reload();
+    if (confirm("Bạn có chắc muốn đăng xuất?")) {
+      localStorage.removeItem("currentUser");
+      currentUser = null;
+      location.reload();
+    }
   }
 
   function addToCart(name, price) {
@@ -243,10 +437,12 @@
     let cart = JSON.parse(localStorage.getItem("cart") || "[]");
     cart.push({ name, price, quantity: 1 });
     localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`Đã thêm ${name} vào giỏ hàng!`);
+    alert(`✅ Đã thêm ${name} vào giỏ hàng!`);
   }
 
-  window.addEventListener("DOMContentLoaded", updateNavbar);
+  window.addEventListener("DOMContentLoaded", function() {
+    updateNavbar();
+  });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
