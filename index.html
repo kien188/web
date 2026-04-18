@@ -9,13 +9,21 @@
   
   <style>
     :root {
-      --primary-gradient: linear-gradient(to right, #2e8548, #faf5fb, #f8b500);
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       --btn-gradient: linear-gradient(to right, #00c9ff, #92fe9d);
       --sidebar-bg: #9ecaf7;
+      --dark-bg: #1a1a2e;
+      --accent-color: #ff6b6b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      background: #f8f9fa;
+      background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
       color: #212529;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
@@ -23,10 +31,13 @@
     /* Navbar Styling */
     .bg-custom {
       background: var(--primary-gradient);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
     .navbar-brand {
-      color: #ab520f !important;
-      font-weight: bold;
+      color: #fff !important;
+      font-weight: 900;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
     }
     .navbar.sticky-top {
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -34,12 +45,12 @@
 
     /* Offcanvas Sidebar Styling */
     .offcanvas {
-      background-color: var(--sidebar-bg) !important;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
       width: 280px !important;
     }
     .offcanvas-body a {
       display: block;
-      color: #212529;
+      color: #fff;
       padding: 12px 15px;
       text-decoration: none;
       font-weight: 600;
@@ -48,52 +59,188 @@
       margin-bottom: 5px;
     }
     .offcanvas-body a:hover {
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: rgba(255, 255, 255, 0.2);
       transform: translateX(5px);
     }
     .offcanvas-body strong {
       display: block;
       margin: 15px 0 10px 15px;
       font-size: 0.9rem;
-      color: #555;
+      color: #fff;
       text-transform: uppercase;
     }
 
-    /* Card & Product Styling */
-    .card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      overflow: hidden;
-      background: #fff;
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 60px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    .hero-banner h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
     }
-    .card-img-top {
-      height: 250px;
-      object-fit: contain;
-      padding: 20px;
-      background-color: #fff;
-    }
-    .btn-buy {
-      background: var(--btn-gradient);
-      border: none;
-      border-radius: 25px;
-      font-weight: bold;
-      padding: 8px 20px;
-      transition: opacity 0.2s;
-    }
-    .btn-buy:hover {
+    .hero-banner p {
+      font-size: 1.2rem;
       opacity: 0.9;
-      color: #000;
+      margin-bottom: 30px;
+    }
+    .hero-banner .btn {
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: bold;
     }
 
+    /* Section Title */
+    .section-title {
+      position: relative;
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 50px;
+      color: #2c3e50;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      width: 80px;
+      height: 5px;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      border-radius: 10px;
+    }
+
+    /* Card & Product Styling */
+    .product-card {
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+      background: #fff;
+      position: relative;
+      height: 100%;
+    }
+    .product-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+    }
+    .product-card .card-img-top {
+      height: 280px;
+      object-fit: contain;
+      padding: 30px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #f1f3f5 100%);
+    }
+    .product-card .card-body {
+      padding: 25px;
+    }
+    .product-card .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #2c3e50;
+      line-height: 1.4;
+    }
+    .product-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 8px 15px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      z-index: 10;
+    }
+    .badge-bestseller {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+    }
+    .badge-discount {
+      background: linear-gradient(135deg, #ffd93d 0%, #f9ca24 100%);
+      color: #333;
+    }
+
+    /* Price Styling */
+    .price-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .price-current {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #ff6b6b;
+    }
+    .price-original {
+      font-size: 1rem;
+      color: #999;
+      text-decoration: line-through;
+    }
+
+    /* Button Styling */
+    .btn-buy {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 50px;
+      font-weight: bold;
+      padding: 12px 25px;
+      transition: all 0.3s ease;
+      color: white;
+      font-size: 1rem;
+    }
+    .btn-buy:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      color: white;
+    }
+
+    /* Features Section */
+    .features-section {
+      background: white;
+      padding: 60px 20px;
+      border-radius: 20px;
+      margin: 80px 0;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+    .feature-item {
+      text-align: center;
+      padding: 30px;
+    }
+    .feature-item i {
+      font-size: 3rem;
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+    .feature-item h5 {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    /* Footer */
     footer {
-      background-color: #85a7c8 !important;
-      margin-top: 50px;
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+      margin-top: 80px;
+      padding: 50px 0 20px;
+      color: white;
+    }
+    footer p {
+      margin-bottom: 10px;
+    }
+    footer a {
+      color: #667eea;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    footer a:hover {
+      color: #764ba2;
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -138,51 +285,215 @@
 </div>
 
 <div class="container py-5">
-  <div class="row mb-4 align-items-center">
-    <div class="col">
-      <h2 class="fw-bold">Sản phẩm nổi bật</h2>
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <h1>💻 ComputerStore</h1>
+    <p>Cửa hàng bán laptop chất lượng hàng đầu Việt Nam</p>
+    <button id="heroShopBtn" class="btn btn-light fw-bold">Bắt Đầu Mua Sắm Ngay</button>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features-section">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="feature-item">
+          <i class="bi bi-truck"></i>
+          <h5>🚚 Giao Hàng Nhanh</h5>
+          <p>Miễn phí vận chuyển toàn TP. HCM</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-item">
+          <i class="bi bi-shield-check"></i>
+          <h5>✅ Hàng Chính Hãng</h5>
+          <p>Bảo hành chính thức từ nhà sản xuất</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-item">
+          <i class="bi bi-headset"></i>
+          <h5>💬 Hỗ Trợ 24/7</h5>
+          <p>Tư vấn miễn phí, hỗ trợ bán hàng</p>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- Sản Phẩm Nổi Bật -->
+  <h2 class="section-title" id="featured-products">🔥 Sản Phẩm Nổi Bật</h2>
+
   <div class="row g-4">
+    <!-- Product 1 -->
     <div class="col-sm-6 col-lg-4">
-      <div class="card h-100">
+      <div class="product-card">
+        <div class="product-badge badge-bestseller">⭐ Best Seller</div>
         <img src="img/lenovo1.webp" class="card-img-top" alt="Lenovo">
         <div class="card-body d-flex flex-column">
-          <h6 class="card-title fw-bold text-truncate-2">Lenovo IdeaPad Slim 3 14IRH10 83K0</h6>
-          <p class="text-danger fw-bold fs-5 mt-auto">42.990.000 VNĐ</p>
-          <button class="btn btn-buy w-100" onclick="addToCart('Lenovo Slim 3', 42990000)">Mua Ngay</button>
+          <h6 class="card-title">Lenovo IdeaPad Slim 3 14IRH10 83K0</h6>
+          <div class="price-section">
+            <span class="price-current">42.990.000 VNĐ</span>
+          </div>
+          <p class="text-muted small mb-3">✓ Intel Core i5 | ✓ 8GB RAM | ✓ 512GB SSD</p>
+          <button class="btn btn-buy w-100 mt-auto" onclick="addToCart('Lenovo Slim 3', 42990000)">🛒 Mua Ngay</button>
         </div>
       </div>
     </div>
 
+    <!-- Product 2 -->
     <div class="col-sm-6 col-lg-4">
-      <div class="card h-100">
+      <div class="product-card">
+        <div class="product-badge badge-discount">-15%</div>
         <img src="img/text_d_i_2__2_29.webp" class="card-img-top" alt="ASUS">
         <div class="card-body d-flex flex-column">
-          <h6 class="card-title fw-bold">ASUS ROG Strix G15 Gaming</h6>
-          <p class="text-danger fw-bold fs-5 mt-auto">32.490.000 VNĐ</p>
-          <button class="btn btn-buy w-100" onclick="addToCart('ASUS ROG Strix', 32490000)">Mua Ngay</button>
+          <h6 class="card-title">ASUS ROG Strix G15 Gaming</h6>
+          <div class="price-section">
+            <span class="price-current">32.490.000 VNĐ</span>
+            <span class="price-original">38.224.000 VNĐ</span>
+          </div>
+          <p class="text-muted small mb-3">✓ RTX 4060 | ✓ i7 | ✓ 144Hz</p>
+          <button class="btn btn-buy w-100 mt-auto" onclick="addToCart('ASUS ROG Strix', 32490000)">🛒 Mua Ngay</button>
         </div>
       </div>
     </div>
 
+    <!-- Product 3 -->
     <div class="col-sm-6 col-lg-4">
-      <div class="card h-100">
+      <div class="product-card">
         <img src="img/hp1.webp" class="card-img-top" alt="HP">
         <div class="card-body d-flex flex-column">
-          <h6 class="card-title fw-bold">Laptop HP 245 G10 B8PF8AT</h6>
-          <p class="text-danger fw-bold fs-5 mt-auto">29.990.000 VNĐ</p>
-          <button class="btn btn-buy w-100" onclick="addToCart('HP 245 G10', 29990000)">Mua Ngay</button>
+          <h6 class="card-title">Laptop HP 245 G10 B8PF8AT</h6>
+          <div class="price-section">
+            <span class="price-current">29.990.000 VNĐ</span>
+          </div>
+          <p class="text-muted small mb-3">✓ AMD Ryzen 5 | ✓ 16GB RAM | ✓ IPS</p>
+          <button class="btn btn-buy w-100 mt-auto" onclick="addToCart('HP 245 G10', 29990000)">🛒 Mua Ngay</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="product-card">
+        <div class="product-badge badge-bestseller">⭐ Best Seller</div>
+        <img src="img/lenovo1.webp" class="card-img-top" alt="Dell XPS">
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">Dell XPS 13 Plus 9320</h6>
+          <div class="price-section">
+            <span class="price-current">38.500.000 VNĐ</span>
+          </div>
+          <p class="text-muted small mb-3">✓ Intel Core Ultra | ✓ 16GB RAM | ✓ 4K</p>
+          <button class="btn btn-buy w-100 mt-auto" onclick="addToCart('Dell XPS 13', 38500000)">🛒 Mua Ngay</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="product-card">
+        <div class="product-badge badge-discount">-20%</div>
+        <img src="img/hp1.webp" class="card-img-top" alt="MacBook Air">
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">MacBook Air M2 13" 2024</h6>
+          <div class="price-section">
+            <span class="price-current">39.990.000 VNĐ</span>
+            <span class="price-original">49.990.000 VNĐ</span>
+          </div>
+          <p class="text-muted small mb-3">✓ Apple M2 | ✓ 8GB RAM | ✓ Retina</p>
+          <button class="btn btn-buy w-100 mt-auto" onclick="addToCart('MacBook Air M2', 39990000)">🛒 Mua Ngay</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="product-card">
+        <img src="img/text_d_i_2__2_29.webp" class="card-img-top" alt="ThinkPad">
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">ThinkPad X1 Carbon Gen 12</h6>
+          <div class="price-section">
+            <span class="price-current">44.990.000 VNĐ</span>
+          </div>
+          <p class="text-muted small mb-3">✓ Intel Core i7 | ✓ 32GB RAM | ✓ OLED</p>
+          <button class="btn btn-buy w-100 mt-auto" onclick="addToCart('ThinkPad X1', 44990000)">🛒 Mua Ngay</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 7 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="product-card">
+        <div class="product-badge badge-discount">-25%</div>
+        <img src="img/lenovo1.webp" class="card-img-top" alt="ASUS Vivobook">
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">ASUS VivoBook 15 Pro OLED</h6>
+          <div class="price-section">
+            <span class="price-current">24.990.000 VNĐ</span>
+            <span class="price-original">33.323.000 VNĐ</span>
+          </div>
+          <p class="text-muted small mb-3">✓ R7 7735U | ✓ 16GB RAM | ✓ OLED</p>
+          <button class="btn btn-buy w-100 mt-auto" onclick="addToCart('ASUS VivoBook', 24990000)">🛒 Mua Ngay</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 8 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="product-card">
+        <img src="img/hp1.webp" class="card-img-top" alt="Acer Aspire">
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">Acer Aspire 5 A515-58GM</h6>
+          <div class="price-section">
+            <span class="price-current">22.490.000 VNĐ</span>
+          </div>
+          <p class="text-muted small mb-3">✓ Intel i7 | ✓ RTX 4050 | ✓ 16GB</p>
+          <button class="btn btn-buy w-100 mt-auto" onclick="addToCart('Acer Aspire 5', 22490000)">🛒 Mua Ngay</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 9 -->
+    <div class="col-sm-6 col-lg-4">
+      <div class="product-card">
+        <div class="product-badge badge-bestseller">⭐ Best Seller</div>
+        <img src="img/text_d_i_2__2_29.webp" class="card-img-top" alt="Razer Blade">
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">Razer Blade 15 RTX 4080</h6>
+          <div class="price-section">
+            <span class="price-current">55.900.000 VNĐ</span>
+          </div>
+          <p class="text-muted small mb-3">✓ i9-13900H | ✓ RTX 4080 | ✓ 240Hz</p>
+          <button class="btn btn-buy w-100 mt-auto" onclick="addToCart('Razer Blade 15', 55900000)">🛒 Mua Ngay</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<footer class="text-white text-center py-4">
+<footer class="text-white">
   <div class="container">
-    <p class="mb-0">© 2025 ComputerStore. Hotline: <span class="fw-bold">BD00666</span></p>
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <h5 class="fw-bold mb-3">💻 ComputerStore</h5>
+        <p>Cửa hàng bán laptop chính hãng, giá rẻ, chất lượng nhất Việt Nam. Hỗ trợ khách hàng bảo hành 100%.</p>
+      </div>
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">Liên Kết</h5>
+        <ul class="list-unstyled">
+          <li><a href="index.html">Trang chủ</a></li>
+          <li><a href="GioHang.html">Giỏ hàng</a></li>
+          <li><a href="Lienhe.html">Liên hệ</a></li>
+          <li><a href="account.html">Tài khoản</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">📞 Liên Hệ</h5>
+        <p>📧 Email: <a href="mailto:computerstore@gmail.com">computerstore@gmail.com</a></p>
+        <p>📱 Hotline: <a href="tel:0900666666">BD00666</a></p>
+        <p>📍 Địa chỉ: TP. HCM</p>
+      </div>
+    </div>
+    <hr class="bg-white">
+    <p class="text-center mb-0">© 2025 ComputerStore. All rights reserved. 🚀</p>
   </div>
 </footer>
 
@@ -399,11 +710,13 @@
 
   function updateNavbar() {
     const area = document.getElementById("userArea");
+    const heroBtn = document.getElementById("heroShopBtn");
     if (!area) return;
+
     if (currentUser) {
       area.innerHTML = `
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fw-bold text-dark" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle fw-bold text-white" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-person-circle me-1"></i>${currentUser}
           </a>
           <ul class="dropdown-menu dropdown-menu-end shadow">
@@ -413,11 +726,21 @@
           </ul>
         </li>
       `;
+      if (heroBtn) {
+        heroBtn.removeAttribute("data-bs-toggle");
+        heroBtn.removeAttribute("data-bs-target");
+        heroBtn.onclick = () => document.getElementById("featured-products").scrollIntoView({ behavior: "smooth" });
+      }
     } else {
       area.innerHTML = `
-        <li class="nav-item"><a class="nav-link text-dark" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Đăng ký</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-dark text-white ms-lg-2 px-3" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Đăng nhập</a></li>
+        <li class="nav-item"><a class="nav-link text-white fw-bold" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Đăng ký</a></li>
+        <li class="nav-item"><a class="nav-link btn btn-light text-dark ms-lg-2 px-3" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Đăng nhập</a></li>
       `;
+      if (heroBtn) {
+        heroBtn.setAttribute("data-bs-toggle", "modal");
+        heroBtn.setAttribute("data-bs-target", "#registerModal");
+        heroBtn.onclick = null;
+      }
     }
   }
 

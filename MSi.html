@@ -9,13 +9,11 @@
   
   <style>
     :root {
-      --primary-gradient: linear-gradient(to right, #2e8548, #faf5fb, #f8b500);
-      --sidebar-bg: #9ecaf7;
-      --btn-gradient: linear-gradient(to right, #00c9ff, #92fe9d);
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
     body {
-      background: #f8f9fa;
+      background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
       color: #212529;
       font-family: 'Segoe UI', sans-serif;
     }
@@ -23,66 +21,128 @@
     /* Navbar */
     .bg-custom {
       background: var(--primary-gradient);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
     .navbar-brand {
-      color: #ab520f !important;
-      font-weight: bold;
+      color: #fff !important;
+      font-weight: 900;
+      font-size: 1.5rem;
     }
 
-    /* Offcanvas Sidebar */
+    /* Page Title */
+    .page-title {
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #2c3e50;
+      position: relative;
+      padding-bottom: 20px;
+    }
+    .page-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 5px;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      border-radius: 10px;
+    }
+
+    /* Product Cards */
+    .product-card {
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background: #fff;
+      overflow: hidden;
+      height: 100%;
+    }
+    .product-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+    }
+    .product-card .card-img-top {
+      height: 280px;
+      object-fit: contain;
+      padding: 30px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #f1f3f5 100%);
+    }
+    .product-card .card-body {
+      padding: 25px;
+    }
+    .product-card .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #2c3e50;
+      line-height: 1.4;
+    }
+    .product-price {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+    .btn-buy {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      width: 100%;
+      padding: 12px;
+    }
+    .btn-buy:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      color: white;
+    }
+
+    /* Modal */
+    .modal-content {
+      border-radius: 15px !important;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+      color: white;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+      margin-top: 80px;
+      padding: 50px 0 20px;
+      color: white;
+    }
+
+    /* Sidebar */
     .offcanvas {
-      background-color: var(--sidebar-bg) !important;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
       width: 280px !important;
     }
     .offcanvas-body a {
       display: block;
-      color: #212529;
+      color: #fff;
       padding: 12px 15px;
       text-decoration: none;
       font-weight: 600;
       border-radius: 8px;
-      transition: 0.3s;
+      transition: all 0.3s ease;
       margin-bottom: 5px;
     }
     .offcanvas-body a:hover {
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: rgba(255, 255, 255, 0.2);
       transform: translateX(5px);
     }
-
-    /* Product Cards */
-    .card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.3s ease;
-      background: #fff;
-      overflow: hidden;
-    }
-    .card:hover {
-      transform: translateY(-8px);
-    }
-    .card-img-top {
-      height: 250px;
-      object-fit: contain;
-      padding: 15px;
-      background: #fff;
-    }
-    .btn-buy {
-      background: var(--btn-gradient);
-      border: none;
-      border-radius: 20px;
-      color: #212529;
-      font-weight: bold;
-      width: 100%;
-      padding: 8px;
-    }
-    .btn-buy:hover {
-      filter: brightness(0.9);
-      color: #000;
-    }
-
-    footer {
-      background-color: #85a7c8 !important;
+    .offcanvas-body strong {
+      display: block;
+      margin: 15px 0 10px 15px;
+      font-size: 0.9rem;
+      color: #fff;
+      text-transform: uppercase;
     }
   </style>
 </head>
@@ -90,11 +150,11 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-custom sticky-top shadow-sm">
   <div class="container">
-    <button class="btn btn-outline-dark me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
-      <i class="bi bi-list"></i> Menu
+    <button class="btn btn-outline-dark me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas">
+      <i class="bi bi-list"></i> <span class="d-none d-sm-inline">Menu</span>
     </button>
     
-    <a class="navbar-brand text-uppercase" href="#">
+    <a class="navbar-brand text-uppercase" href="index.html">
       <i class="bi bi-laptop me-2"></i>Computer Store
     </a>
 
@@ -103,93 +163,94 @@
     </button>
 
     <div class="collapse navbar-collapse" id="mainNavbar">
-      <ul class="navbar-nav ms-auto" id="userArea">
-        </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="userArea">
+      </ul>
     </div>
   </div>
 </nav>
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas">
   <div class="offcanvas-header border-bottom">
-    <h5 class="offcanvas-title fw-bold">DANH MỤC</h5>
+    <h5 class="offcanvas-title fw-bold"><i class="bi bi-grid-fill me-2"></i>DANH MỤC</h5>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
   </div>
   <div class="offcanvas-body">
-    <a href="index.html">🏠 Trang chủ</a>
-    <a href="GioHang.html">🛒 Giỏ hàng</a>
-    <a href="#" data-bs-toggle="modal" data-bs-target="#contactModal">📞 Hotline</a>
+    <a href="index.html"><i class="bi bi-house-door me-2"></i>Trang chủ</a>
+    <a href="GioHang.html"><i class="bi bi-cart3 me-2"></i>Giỏ hàng</a>
+    <a href="Lienhe.html"><i class="bi bi-envelope me-2"></i>Liên hệ</a>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#contactModal"><i class="bi bi-telephone me-2"></i>Hotline</a>
     <hr>
-    <strong class="ps-3 d-block mb-2 text-muted text-uppercase small">Thương hiệu</strong>
-    <a href="Dell.html">Dell</a>
-    <a href="MSi.html" class="bg-white shadow-sm">MSI</a>
+    <strong>Thương hiệu Laptop</strong>
+    <a href="Dell.html">Dell Inspiron/Vostro</a>
+    <a href="MSi.html">MSI Gaming</a>
   </div>
 </div>
 
 <div class="container py-5">
-  <h2 class="text-center mb-5 fw-bold">Sản phẩm MSI Gaming & Workstation</h2>
+  <h2 class="page-title">🎮 Sản Phẩm MSI Gaming & Workstation</h2>
   <div class="row g-4">
     <div class="col-md-6 col-lg-4">
-      <div class="card h-100">
+      <div class="product-card h-100">
         <img src="img/msi1.webp" class="card-img-top" alt="MSI Modern 14">
         <div class="card-body d-flex flex-column">
-          <h6 class="card-title fw-bold">Laptop MSI Modern 14 C12MO-660VN</h6>
-          <p class="text-danger fw-bold mt-auto">42.990.000 VNĐ</p>
-          <button class="btn btn-buy" onclick="addToCart('MSI Modern 14', 42990000)">Mua ngay</button>
+          <h5 class="card-title">Laptop MSI Modern 14 C12MO-660VN</h5>
+          <p class="product-price mt-auto">42.990.000 VNĐ</p>
+          <button class="btn btn-buy" onclick="addToCart('MSI Modern 14', 42990000)">🛒 Mua Ngay</button>
         </div>
       </div>
     </div>
 
     <div class="col-md-6 col-lg-4">
-      <div class="card h-100">
+      <div class="product-card h-100">
         <img src="img/msi2.webp" class="card-img-top" alt="MSI Katana 15">
         <div class="card-body d-flex flex-column">
-          <h6 class="card-title fw-bold">Laptop MSI Katana 15 B13VFK-676VN</h6>
-          <p class="text-danger fw-bold mt-auto">32.490.000 VNĐ</p>
-          <button class="btn btn-buy" onclick="addToCart('MSI Katana 15', 32490000)">Mua ngay</button>
+          <h5 class="card-title">Laptop MSI Katana 15 B13VFK-676VN</h5>
+          <p class="product-price mt-auto">32.490.000 VNĐ</p>
+          <button class="btn btn-buy" onclick="addToCart('MSI Katana 15', 32490000)">🛒 Mua Ngay</button>
         </div>
       </div>
     </div>
 
     <div class="col-md-6 col-lg-4">
-      <div class="card h-100">
+      <div class="product-card h-100">
         <img src="img/msi3.webp" class="card-img-top" alt="MSI Thin A15">
         <div class="card-body d-flex flex-column">
-          <h6 class="card-title fw-bold">Laptop gaming MSI Thin A15 B7UCX 020VN</h6>
-          <p class="text-danger fw-bold mt-auto">29.990.000 VNĐ</p>
-          <button class="btn btn-buy" onclick="addToCart('MSI Thin A15', 29990000)">Mua ngay</button>
+          <h5 class="card-title">Laptop gaming MSI Thin A15 B7UCX 020VN</h5>
+          <p class="product-price mt-auto">29.990.000 VNĐ</p>
+          <button class="btn btn-buy" onclick="addToCart('MSI Thin A15', 29990000)">🛒 Mua Ngay</button>
         </div>
       </div>
     </div>
 
     <div class="col-md-6 col-lg-4">
-      <div class="card h-100">
+      <div class="product-card h-100">
         <img src="img/msi4.webp" class="card-img-top" alt="MSI Prestige 14">
         <div class="card-body d-flex flex-column">
-          <h6 class="card-title fw-bold">Laptop MSI Prestige 14 EVO B13M-401VN</h6>
-          <p class="text-danger fw-bold mt-auto">34.990.000 VNĐ</p>
-          <button class="btn btn-buy" onclick="addToCart('MSI Prestige 14', 34990000)">Mua ngay</button>
+          <h5 class="card-title">Laptop MSI Prestige 14 EVO B13M-401VN</h5>
+          <p class="product-price mt-auto">34.990.000 VNĐ</p>
+          <button class="btn btn-buy" onclick="addToCart('MSI Prestige 14', 34990000)">🛒 Mua Ngay</button>
         </div>
       </div>
     </div>
 
     <div class="col-md-6 col-lg-4">
-      <div class="card h-100">
+      <div class="product-card h-100">
         <img src="img/msi5.webp" class="card-img-top" alt="MSI Prestige 13">
         <div class="card-body d-flex flex-column">
-          <h6 class="card-title fw-bold">Laptop MSI Prestige 13 AI+ Evo A2VMG-040VN</h6>
-          <p class="text-danger fw-bold mt-auto">36.500.000 VNĐ</p>
-          <button class="btn btn-buy" onclick="addToCart('MSI Prestige 13 AI', 36500000)">Mua ngay</button>
+          <h5 class="card-title">Laptop MSI Prestige 13 AI+ Evo A2VMG-040VN</h5>
+          <p class="product-price mt-auto">36.500.000 VNĐ</p>
+          <button class="btn btn-buy" onclick="addToCart('MSI Prestige 13 AI', 36500000)">🛒 Mua Ngay</button>
         </div>
       </div>
     </div>
 
     <div class="col-md-6 col-lg-4">
-      <div class="card h-100">
+      <div class="product-card h-100">
         <img src="img/msi6.webp" class="card-img-top" alt="MSI Katana 15 V2">
         <div class="card-body d-flex flex-column">
-          <h6 class="card-title fw-bold">Laptop MSI Katana 15 B13UDXK-2269VN V2</h6>
-          <p class="text-danger fw-bold mt-auto">38.200.000 VNĐ</p>
-          <button class="btn btn-buy" onclick="addToCart('MSI Katana 15 V2', 38200000)">Mua ngay</button>
+          <h5 class="card-title">Laptop MSI Katana 15 B13UDXK-2269VN V2</h5>
+          <p class="product-price mt-auto">38.200.000 VNĐ</p>
+          <button class="btn btn-buy" onclick="addToCart('MSI Katana 15 V2', 38200000)">🛒 Mua Ngay</button>
         </div>
       </div>
     </div>
@@ -198,21 +259,44 @@
 
 <div class="modal fade" id="contactModal" tabindex="-1">
   <div class="modal-dialog">
-    <div class="modal-content" style="background-color: #25c16b; border-radius: 15px;">
+    <div class="modal-content" style="border-radius: 15px; background: #667eea; color: white;">
       <div class="modal-header border-0">
-        <h5 class="modal-title fw-bold">Liên hệ hỗ trợ</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <h5 class="modal-title fw-bold">📞 Thông Tin Liên Hệ</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body text-center py-4">
-        <p>Email: <strong>support@computerstore.com</strong></p>
-        <p>Hotline: <span class="badge bg-dark fs-6">BD00666</span></p>
+        <p>📧 Email: <strong>computerstore@gmail.com</strong></p>
+        <p>📱 Hotline: <span class="badge bg-light text-dark fs-6">BD00666</span></p>
       </div>
     </div>
   </div>
 </div>
 
-<footer class="text-white text-center py-4">
-  © 2025 ComputerStore. Hotline: BD00666
+<footer class="text-white">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <h5 class="fw-bold mb-3">💻 ComputerStore</h5>
+        <p>Cửa hàng bán laptop MSI Gaming chính hãng, giá tốt nhất thị trường.</p>
+      </div>
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">Liên Kết</h5>
+        <ul class="list-unstyled">
+          <li><a href="index.html" class="text-white-50">Trang chủ</a></li>
+          <li><a href="GioHang.html" class="text-white-50">Giỏ hàng</a></li>
+          <li><a href="Lienhe.html" class="text-white-50">Liên hệ</a></li>
+          <li><a href="account.html" class="text-white-50">Tài khoản</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">📞 Hotline</h5>
+        <p class="text-white-50">Email: computerstore@gmail.com</p>
+        <p class="text-white-50">Phone: BD00666</p>
+      </div>
+    </div>
+    <hr class="bg-white">
+    <p class="text-center mb-0 text-white-50">© 2025 ComputerStore. All rights reserved.</p>
+  </div>
 </footer>
 
 <script>
@@ -225,29 +309,35 @@
     if (currentUser) {
       area.innerHTML = `
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-dark fw-bold" href="#" data-bs-toggle="dropdown">Chào, ${currentUser}</a>
+          <a class="nav-link dropdown-toggle fw-bold text-white" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle me-1"></i>${currentUser}
+          </a>
           <ul class="dropdown-menu dropdown-menu-end shadow">
             <li><a class="dropdown-item" href="account.html">Tài khoản</a></li>
+            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger" href="#" onclick="logout()">Đăng xuất</a></li>
           </ul>
         </li>
       `;
     } else {
       area.innerHTML = `
-        <li class="nav-item"><a class="nav-link text-dark" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-dark text-white px-3 ms-lg-2" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+        <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html">Đăng ký</a></li>
+        <li class="nav-item"><a class="nav-link btn btn-light text-dark ms-lg-2 px-3" href="index.html">Đăng nhập</a></li>
       `;
     }
   }
 
   function logout() {
-    localStorage.removeItem("currentUser");
-    location.reload();
+    if (confirm("Bạn có chắc muốn đăng xuất?")) {
+      localStorage.removeItem("currentUser");
+      location.reload();
+    }
   }
 
   function addToCart(name, price) {
     if (!currentUser) {
-      alert("Bạn cần đăng nhập để mua hàng!");
+      alert("⚠️ Bạn cần đăng nhập để mua hàng!");
+      window.location.href = "index.html";
       return;
     }
     let cart = JSON.parse(localStorage.getItem("cart") || "[]");

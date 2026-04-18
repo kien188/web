@@ -7,181 +7,410 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
-    body {
-  background-color: #f5f7fa;
-  color: #212529;
-  font-family: 'Segoe UI', sans-serif;
-}
-.card-cart {
-  background-color: #ffffff;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.table td, .table th {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #212529;
-}
-h2 {
-  font-weight: bold;
-  color: #0d6efd;
-}
-.btn-danger {
-  border-radius: 20px;
-  background-color: #ff6b6b;
-  border: none;
-}
-.btn-success {
-  border-radius: 20px;
-  background: linear-gradient(to right, #00c9ff, #92fe9d);
-  border: none;
-  color: #212529;
-}
-.btn-cart {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1050;
-  padding: 15px 20px;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #ffc107;
-  background-color: #ffc107;
-  transition: transform 0.2s ease;
-}
-.btn-cart:hover {
-  transform: scale(1.1);
-}
-.btn-account {
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  z-index: 1050;
-  padding: 15px 20px;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #0dcaf0;
-  background-color: #0dcaf0;
-  transition: transform 0.2s ease;
-}
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --accent-color: #ff6b6b;
+    }
 
-.btn-account:hover {
-  transform: scale(1.1);
-}
+    body {
+      background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Navbar */
+    .bg-custom {
+      background: var(--primary-gradient);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      color: #fff !important;
+      font-weight: 900;
+      font-size: 1.5rem;
+    }
+
+    /* Cart Container */
+    .cart-header {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .cart-header h2 {
+      color: #667eea;
+      font-weight: 900;
+      margin-bottom: 0;
+    }
+
+    /* Table Styling */
+    .table-wrapper {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+
+    .table {
+      margin-bottom: 0;
+    }
+
+    .table thead {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .table thead th {
+      border: none;
+      font-weight: bold;
+      padding: 15px;
+    }
+
+    .table tbody td {
+      padding: 15px;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+    }
+
+    .table tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    /* Price Styling */
+    .price-text {
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    /* Button Styling */
+    .btn-delete {
+      background-color: #ff6b6b;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .btn-delete:hover {
+      background-color: #ff5252;
+      transform: scale(1.05);
+    }
+
+    .btn-checkout {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-weight: bold;
+      padding: 12px 40px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-checkout:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Total Section */
+    .total-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .total-amount {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #667eea;
+    }
+
+    /* Empty Cart */
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      color: #667eea;
+      margin-bottom: 20px;
+    }
+
+    .empty-state p {
+      font-size: 1.1rem;
+      color: #999;
+      margin-bottom: 30px;
+    }
+
+    /* Action Buttons */
+    .button-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-home {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 18px;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      font-size: 24px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-home:hover {
+      transform: scale(1.15);
+      color: white;
+      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+      margin-top: 80px;
+      padding: 50px 0 20px;
+      color: white;
+    }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="card-cart">
-    <h2 class="text-center mb-4">🛒 Your Cart</h2>
-    <div class="table-responsive">
-      <table class="table table-bordered table-light text-black">
-        <thead class="table-dark">
-          <tr>
-            <th>Product Name</th>
-            <th>Pirce</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="cartTableBody">
-          <!-- Sản phẩm sẽ được thêm vào  JavaScript -->
-        </tbody>
-      </table>
-    </div>
-    <h4 class="text-end mt-4">Total: <span id="cartTotal">0</span></h4>
-    <div class="text-end">
-      <button class="btn btn-success" onclick="checkout()">Buy</button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-custom sticky-top">
+  <div class="container">
+    <a class="navbar-brand text-uppercase" href="index.html">
+      <i class="bi bi-laptop me-2"></i>Computer Store
+    </a>
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="userArea">
+      </ul>
     </div>
   </div>
+</nav>
+
+<div class="container py-5">
+  <!-- Cart Header -->
+  <div class="cart-header">
+    <h2><i class="bi bi-cart3 me-2"></i>Giỏ Hàng Của Bạn</h2>
+  </div>
+
+  <!-- Cart Table or Empty State -->
+  <div id="cartContent"></div>
 </div>
 
-<!-- Nút trở lại Trang chủ -->
-<a href="index.html" class="btn btn-warning btn-cart">
-  <i class="bi bi-house-door-fill fs-4 text-black"></i>
+<!-- Action Buttons -->
+<a href="index.html" class="btn btn-home" title="Home">
+  <i class="bi bi-house-door-fill"></i>
 </a>
-<a href="account.html" class="btn btn-info position-fixed d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="bottom: 90px; right: 20px; z-index: 1050; box-shadow: 0 0 10px #0dcaf0;">
-  <i class="bi bi-person-circle fs-5 text-white"></i> 
-  <span class="text-white fw-bold">View purchase history</span>
-</a>
+
+<footer class="text-white">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <h5 class="fw-bold mb-3">💻 ComputerStore</h5>
+        <p>Cửa hàng bán laptop chính hãng, giá rẻ, chất lượng nhất Việt Nam.</p>
+      </div>
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">Liên Kết</h5>
+        <ul class="list-unstyled">
+          <li><a href="index.html" class="text-white-50">Trang chủ</a></li>
+          <li><a href="GioHang.html" class="text-white-50">Giỏ hàng</a></li>
+          <li><a href="Lienhe.html" class="text-white-50">Liên hệ</a></li>
+          <li><a href="account.html" class="text-white-50">Tài khoản</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">📞 Hotline</h5>
+        <p class="text-white-50">Email: computerstore@gmail.com</p>
+        <p class="text-white-50">Phone: BD00666</p>
+      </div>
+    </div>
+    <hr class="bg-white">
+    <p class="text-center mb-0 text-white-50">© 2025 ComputerStore. All rights reserved.</p>
+  </div>
+</footer>
 
 <script>
-function formatPrice(price) {
-  return price.toLocaleString('vi-VN') + ' VNĐ';
-}
+  let currentUser = localStorage.getItem("currentUser") || null;
 
-function loadCart() {
-  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  const tbody = document.getElementById("cartTableBody");
-  const totalEl = document.getElementById("cartTotal");
-  tbody.innerHTML = "";
+  function updateNavbar() {
+    const area = document.getElementById("userArea");
+    if (!area) return;
+    if (currentUser) {
+      area.innerHTML = `
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-bold text-white" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle me-1"></i>${currentUser}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li><a class="dropdown-item" href="account.html">Tài khoản</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#" onclick="logout()">Đăng xuất</a></li>
+          </ul>
+        </li>
+      `;
+    }
+  }
 
-  let total = 0;
+  function logout() {
+    if (confirm("Bạn có chắc muốn đăng xuất?")) {
+      localStorage.removeItem("currentUser");
+      location.reload();
+    }
+  }
 
-  cart.forEach((item, index) => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
+  function formatPrice(price) {
+    return price.toLocaleString('vi-VN') + ' VNĐ';
+  }
 
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${item.name}</td>
-      <td>${formatPrice(item.price)}</td>
-      <td>${item.quantity}</td>
-      <td>${formatPrice(itemTotal)}</td>
-      <td><button class="btn btn-danger btn-sm" onclick="removeItem(${index})">Delete</button></td>
+  function loadCart() {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const container = document.getElementById("cartContent");
+
+    if (cart.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <i class="bi bi-bag"></i>
+          <p>Giỏ hàng của bạn đang trống</p>
+          <a href="index.html" class="btn btn-primary">Quay lại cửa hàng</a>
+        </div>
+      `;
+      return;
+    }
+
+    let total = 0;
+    let tableRows = '';
+
+    cart.forEach((item, index) => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+
+      tableRows += `
+        <tr>
+          <td><strong>${item.name}</strong></td>
+          <td class="price-text">${formatPrice(item.price)}</td>
+          <td>
+            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)" style="width: 60px; padding: 5px; border-radius: 8px; border: 1px solid #ddd;">
+          </td>
+          <td class="price-text">${formatPrice(itemTotal)}</td>
+          <td>
+            <button class="btn btn-delete btn-sm" onclick="removeItem(${index})">
+              <i class="bi bi-trash"></i> Xóa
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+
+    container.innerHTML = `
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Sản Phẩm</th>
+              <th>Giá</th>
+              <th>Số Lượng</th>
+              <th>Thành Tiền</th>
+              <th>Hành Động</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tableRows}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="total-section">
+        <span style="font-size: 1.2rem; font-weight: bold;">💰 Tổng Cộng:</span>
+        <span class="total-amount">${formatPrice(total)}</span>
+      </div>
+
+      <div class="button-group justify-content-end">
+        <a href="index.html" class="btn btn-outline-secondary btn-lg">
+          <i class="bi bi-arrow-left"></i> Tiếp Tục Mua Sắm
+        </a>
+        <button class="btn btn-checkout btn-lg" onclick="checkout()">
+          <i class="bi bi-credit-card"></i> Thanh Toán Ngay
+        </button>
+      </div>
     `;
-    tbody.appendChild(row);
-  });
-
-  totalEl.textContent = formatPrice(total);
-}
-
-function removeItem(index) {
-  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  cart.splice(index, 1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  loadCart();
-}
-
-function checkout() {
-  if (!confirm("Confirm payment for all products?")) return;
-
-  const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    alert("⚠ You need to login to pay.");
-    return;
   }
 
-  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  if (cart.length === 0) {
-    alert("🛒 Cart is empty.");
-    return;
+  function updateQuantity(index, newQuantity) {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    newQuantity = parseInt(newQuantity) || 1;
+    if (newQuantity > 0) {
+      cart[index].quantity = newQuantity;
+      localStorage.setItem("cart", JSON.stringify(cart));
+      loadCart();
+    }
   }
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  function removeItem(index) {
+    if (confirm("Xóa sản phẩm này?")) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      loadCart();
+    }
+  }
 
-  // Lưu vào lịch sử mua hàng
-  const history = JSON.parse(localStorage.getItem("purchaseHistory") || "[]");
+  function checkout() {
+    if (!currentUser) {
+      alert("⚠️ Bạn cần đăng nhập để thanh toán!");
+      window.location.href = "index.html";
+      return;
+    }
 
-  history.push({
-    username: currentUser,
-    date: new Date().toISOString(),
-    items: cart,
-    total
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    if (cart.length === 0) {
+      alert("🛒 Giỏ hàng trống!");
+      return;
+    }
+
+    if (!confirm("Xác nhận thanh toán?")) return;
+
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const history = JSON.parse(localStorage.getItem("purchaseHistory") || "[]");
+
+    history.push({
+      username: currentUser,
+      date: new Date().toISOString(),
+      items: cart,
+      total
+    });
+
+    localStorage.setItem("purchaseHistory", JSON.stringify(history));
+    localStorage.removeItem("cart");
+
+    alert("🎉 Thanh toán thành công!");
+    window.location.href = "account.html";
+  }
+
+  window.addEventListener("DOMContentLoaded", function() {
+    updateNavbar();
+    loadCart();
   });
-
-  localStorage.setItem("purchaseHistory", JSON.stringify(history));
-
-  // Xoá giỏ hàng
-  localStorage.removeItem("cart");
-
-  alert("🎉 Payment successful!");
-  // window.location.href = "account.html";
-
-  loadCart(); // Cập nhật lại giao diện 
-}
-window.addEventListener("DOMContentLoaded", loadCart);
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
