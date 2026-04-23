@@ -540,7 +540,7 @@
 <!-- Modal Đăng Nhập -->
 <div class="modal fade" id="loginModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border-radius: 15px;">
+    <div class="modal-content">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title fw-bold">🔐 Đăng Nhập</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
@@ -548,16 +548,35 @@
       <div class="modal-body">
         <form id="loginForm">
           <div class="mb-3">
-            <label for="loginUsername" class="form-label">Tên đăng nhập</label>
-            <input type="text" class="form-control" id="loginUsername" placeholder="Nhập tên đăng nhập" required>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person"></i></span>
+              <input type="text" class="form-control" id="loginUsername" placeholder="Tên đăng nhập" required>
+            </div>
           </div>
           <div class="mb-3">
-            <label for="loginPassword" class="form-label">Mật khẩu</label>
-            <input type="password" class="form-control" id="loginPassword" placeholder="Nhập mật khẩu" required>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              <input type="password" class="form-control" id="loginPassword" placeholder="Mật khẩu" required>
+            </div>
           </div>
           <div id="loginError" class="alert alert-danger d-none"></div>
+          <div class="d-flex justify-content-between mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="rememberMe">
+              <label class="form-check-label small" for="rememberMe">Ghi nhớ</label>
+            </div>
+            <a href="#" class="small text-decoration-none">Quên mật khẩu?</a>
+          </div>
           <button type="submit" class="btn btn-primary w-100 fw-bold">Đăng Nhập</button>
         </form>
+        <div class="text-center mt-4">
+          <p class="small text-muted mb-2">Hoặc đăng nhập bằng</p>
+          <div class="social-login">
+            <a href="#" class="btn-social"><i class="bi bi-google"></i></a>
+            <a href="#" class="btn-social"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="btn-social"><i class="bi bi-github"></i></a>
+          </div>
+        </div>
         <hr>
         <p class="text-center text-muted">Chưa có tài khoản? 
           <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal" class="text-success fw-bold">Đăng ký ngay</a>
