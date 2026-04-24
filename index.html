@@ -96,6 +96,12 @@
       border-radius: 50px;
       font-weight: bold;
     }
+    .hero-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
     /* Section Title */
     .section-title {
@@ -252,7 +258,7 @@
       <i class="bi bi-list"></i> <span class="d-none d-sm-inline">Menu</span>
     </button>
     
-    <a class="navbar-brand text-uppercase" href="#">
+    <a class="navbar-brand text-uppercase" href="index.html">
       <i class="bi bi-laptop me-2"></i>Computer Store
     </a>
 
@@ -289,7 +295,10 @@
   <div class="hero-banner">
     <h1>💻 ComputerStore</h1>
     <p>Cửa hàng bán laptop chất lượng hàng đầu Việt Nam</p>
-    <button id="heroShopBtn" class="btn btn-light fw-bold">Bắt Đầu Mua Sắm Ngay</button>
+    <div class="hero-actions">
+      <button id="heroShopBtn" class="btn btn-light fw-bold">Bắt Đầu Mua Sắm Ngay</button>
+      <a id="heroAuthBtn" href="login.html" class="btn btn-outline-light fw-bold">Đăng nhập / Đăng ký</a>
+    </div>
   </div>
 
   <!-- Features Section -->
@@ -639,6 +648,7 @@
     if (!validateUsername(username)) {
       errorDiv.innerHTML = "⚠️ Tên đăng nhập phải có ít nhất 3 ký tự, chỉ chứa chữ, số và dấu gạch dưới";
       errorDiv.classList.remove("d-none");
+      window.location.href = "login.html";
       return;
     }
 
@@ -730,6 +740,7 @@
   function updateNavbar() {
     const area = document.getElementById("userArea");
     const heroBtn = document.getElementById("heroShopBtn");
+    const heroAuthBtn = document.getElementById("heroAuthBtn");
     if (!area) return;
 
     if (currentUser) {
@@ -746,19 +757,25 @@
         </li>
       `;
       if (heroBtn) {
-        heroBtn.removeAttribute("data-bs-toggle");
-        heroBtn.removeAttribute("data-bs-target");
         heroBtn.onclick = () => document.getElementById("featured-products").scrollIntoView({ behavior: "smooth" });
+      }
+      if (heroAuthBtn) {
+        heroAuthBtn.href = "account.html";
+        heroAuthBtn.textContent = "Tài khoản của tôi";
       }
     } else {
       area.innerHTML = `
-        <li class="nav-item"><a class="nav-link text-white fw-bold" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Đăng ký</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-light text-dark ms-lg-2 px-3" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Đăng nhập</a></li>
+        <li class="nav-item"><a class="nav-link text-white fw-bold" href="register.html">Đăng ký</a></li>
+        <li class="nav-item"><a class="nav-link btn btn-light text-dark ms-lg-2 px-3" href="login.html">Đăng nhập</a></li>
       `;
       if (heroBtn) {
-        heroBtn.setAttribute("data-bs-toggle", "modal");
-        heroBtn.setAttribute("data-bs-target", "#registerModal");
-        heroBtn.onclick = null;
+        heroBtn.onclick = () => {
+          window.location.href = "login.html";
+        };
+      }
+      if (heroAuthBtn) {
+        heroAuthBtn.href = "register.html";
+        heroAuthBtn.textContent = "Tạo tài khoản";
       }
     }
   }
@@ -774,6 +791,7 @@
   function addToCart(name, price) {
     if (!currentUser) {
       alert("Vui lòng đăng nhập để mua hàng!");
+      window.location.href = "login.html";
       return;
     }
     let cart = JSON.parse(localStorage.getItem("cart") || "[]");
